@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>顔認証アプリ</title>
+    <script>
+        function submitForm() {
+            document.getElementById("uploadForm").submit();
+        }
+    </script>
+</head>
+<body>
+    <h1>画像をアップロードしてください</h1>
+    <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" onchange="submitForm()">
+        <!-- 画像表示ボタンは非表示にする -->
+    </form>
+    {% if uploaded_image %}
+        <h2>アップロードされた画像：</h2>
+        <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}">
+        <br>
+        <a href="{{ url_for('detect_faces', filename=uploaded_image) }}">顔認証</a>
+    {% endif %}
+    {% if processed_image %}
+        <h2>顔認証された画像：</h2>
+        <img src="{{ url_for('static', filename='uploads/' + processed_image) }}">
+    {% endif %}
+</body>
+</html>
